@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 public class Conversor {
     private static final String API_URL = "https://v6.exchangerate-api.com/v6/c23dcc62189aa52e9032e404/latest/USD";
     private static final HttpClient client = HttpClient.newHttpClient();
+
     //Available currencies
     protected static final String[] CURRENCIES = {"USD", "BRL", "EUR", "AUD", "GBP", "ARS", "OTHER"};
 
@@ -31,14 +32,9 @@ public class Conversor {
     //Get exchange rate
     private static double getExchangeRate(String fromCurrency, String toCurrency) {
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(API_URL))
-                    .header("Accept", "application/json")
-                    .GET()
-                    .build();
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(API_URL)).header("Accept", "application/json").GET().build();
 
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             Gson gson = new Gson();
             JsonObject json = gson.fromJson(response.body(), JsonObject.class);
             JsonObject conversionRates = json.getAsJsonObject("conversion_rates");

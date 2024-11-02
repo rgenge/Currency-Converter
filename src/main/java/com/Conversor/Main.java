@@ -9,27 +9,33 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         //Scan variables and load currencies lists
         try (Scanner scanner = new Scanner(System.in)) {
             String[] currencies = Conversor.getCurrencies();
             List<String> currenciesFromFile = loadCurrenciesFromFile();
+
             // Display menu for source currency
             System.out.println("Select the currency to convert from:");
             displayCurrencyMenu(currencies);
             int fromChoice = getValidChoice(scanner, currencies.length);
             String fromCurrency = currencies[fromChoice - 1];
             fromCurrency = checkValidCurrenciesFromFile(scanner, currenciesFromFile, fromCurrency, fromChoice);
+
             // Display menu for target currency
             System.out.println("\nSelect the currency to convert to:");
             displayCurrencyMenu(currencies);
             int toChoice = getValidChoice(scanner, currencies.length);
             String toCurrency = currencies[toChoice - 1];
             toCurrency = checkValidCurrenciesFromFile(scanner, currenciesFromFile, toCurrency, toChoice);
+
             // Get amount to convert
             System.out.println("\nEnter the amount to convert:");
             double amount = getValidAmount(scanner);
+
             // Perform conversion
             double convertedAmount = Conversor.convertCurrency(fromCurrency, toCurrency, amount);
+
             // Display result
             if (convertedAmount != -1) {
                 System.out.printf("%.2f %s is equal to %.2f %s%n", amount, fromCurrency, convertedAmount, toCurrency);
@@ -85,6 +91,7 @@ public class Main {
 
     public static String checkValidCurrenciesFromFile(Scanner scanner, List<String> currenciesFromFile, String Currency, int Choice) {
         if (Choice == 7) {
+
             // Select currency manually
             System.out.print("Enter the full name of the currency: ");
             String manualCurrency = scanner.nextLine().trim();
